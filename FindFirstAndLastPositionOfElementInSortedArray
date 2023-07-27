@@ -1,0 +1,54 @@
+class Solution {
+public:
+    int first(vector<int>&nums,int start,int end,int target)
+    {
+        int temp=-1;
+        while(start<=end)
+        {
+            int mid = start+(end-start)/2;
+            if(nums[mid]==target)
+            {
+                temp=mid;
+                end=mid-1;
+            }
+            else if(nums[mid]>target)
+            end = mid-1;
+
+            else
+            start=mid+1;
+        }
+        return temp;
+    }
+
+    int end(vector<int>&nums,int start,int end,int target)
+    {
+        // int start=0;
+        // int end=nums.size()-1;
+        int temp=-1;
+        while(start<=end)
+        {
+            int mid = start+(end-start)/2;
+            if(nums[mid]==target)
+            {
+                temp=mid;
+                start=mid+1;
+            }
+            else if(nums[mid]>target)
+            end = mid-1;
+
+            else
+            start=mid+1;
+        }
+        return temp;
+    }
+    vector<int> searchRange(vector<int>& nums, int target) {
+        //using binary search
+        vector<int> ans(2);
+        int n=nums.size();
+        int x = first(nums,0,n-1,target);
+        int y = end(nums,0,n-1,target);
+        ans[0]=x;
+        ans[1]=y;
+        return ans;
+    }
+};
