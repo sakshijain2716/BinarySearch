@@ -1,0 +1,60 @@
+class Solution {
+public:
+int posfirst(vector<int>&nums , int low , int high)
+{
+    int n = nums.size() , st=-1;
+    
+    while(low<=high)
+    {
+        int mid = low+(high-low)/2;
+        if(nums[mid]>0)
+        {
+            st = mid;
+            high = mid-1;
+        }
+        else 
+        low= mid+1;
+    }
+    return st;
+}
+int neglast(vector<int>&nums , int low , int high)
+{
+    int n = nums.size() , lst=-1;
+    while(low<=high)
+    {
+        int mid = low+(high-low)/2;
+        if(nums[mid]<0)
+        {
+            lst = mid;
+            low = mid+1;
+        }
+        else 
+        high = mid-1;
+
+        // else 
+        // return lastindex(nums , low , mid+1);
+    }
+    return lst;
+}
+    int maximumCount(vector<int>& nums) {
+        int n = nums.size() , pos=0 , neg=0;
+        if(nums[0] > 0 || nums[n-1]<0)
+        return n;
+        if(nums[0]==0 && nums[n-1]==0)
+        return 0;
+
+        int pos_strt = posfirst(nums , 0 ,n-1);
+        int neg_last = neglast(nums , 0 , n-1);
+
+        if(pos_strt == -1)
+        return neg_last+1;
+
+        if(neg_last == -1)
+        return n - pos_strt;
+
+        pos = n - pos_strt;
+        neg = neg_last + 1;
+        return max(pos , neg);
+
+    }
+};
